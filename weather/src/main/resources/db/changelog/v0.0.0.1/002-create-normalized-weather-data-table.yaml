@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-normalized-weather-data-table
+      author: BorisAT
+      changes:
+        - createTable:
+            tableName: normalized_weather_data
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: source_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: temperature
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: humidity
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: TIMESTAMP WITHOUT TIME ZONE
+                  constraints:
+                    nullable: false

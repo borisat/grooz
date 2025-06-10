@@ -1,0 +1,13 @@
+package ru.grooz.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AggregatedWeatherResponse {
+    private double averageTemperature;
+    private double averageHumidity;
+}

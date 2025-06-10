@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-raw-weather-data-table
+      author: BorisAT
+      changes:
+        - createTable:
+            tableName: raw_weather_data
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: source_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payload
+                  type: TEXT
+              - column:
+                  name: timestamp
+                  type: TIMESTAMP WITHOUT TIME ZONE

@@ -1,0 +1,43 @@
+version: '3'
+services:
+  weather-service:
+    container_name: weather-service
+    build:
+      context: .
+      dockerfile: ./weather/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://grooz-db:5432/grooz-db
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}
+      WEATHER_SOURCES_BASE_URL: http://source-service:8081/source/
+      WEATHER_SOURCES_COUNT: 100
+    depends_on:
+      grooz-db:
+        condition: service_started
+      source-service:
+        condition: service_started
+
+  grooz-db:
+    container_name: grooz-db
+    image: postgres:14.1-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: grooz-db
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 50m
+
+  source-service:
+    container_name: source-service
+    build:
+      context: .
+      dockerfile: ./source/Dockerfile
+    ports:
+      - "8081:8081"

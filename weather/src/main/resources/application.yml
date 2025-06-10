@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+    show-sql: true
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/grooz-db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yaml
+    drop-first: false
+
+weather:
+  sources:
+    base-url: http://localhost:8081/source/
+    count: 100
+    retry:
+      max-attempts: 2
+      delay-seconds: 1
